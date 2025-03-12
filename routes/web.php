@@ -2,8 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Top;
+use App\Livewire\Workbook;
 
 Route::get('/', Top::class);
+Route::get('/workbook', Workbook::class);
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
