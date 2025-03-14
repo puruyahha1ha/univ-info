@@ -8,7 +8,7 @@
         <!-- PC用メニュー -->
         <nav class="hidden md:flex space-x-6 items-center">
             <a href="/" class="hover:underline" wire:navigate>ホーム</a>
-            <a href="#" class="hover:underline">スケジュール</a>
+            <a href="/schedule" class="hover:underline" wire:navigate>スケジュール</a>
             <a href="/workbook" class="hover:underline" wire:navigate>過去問</a>
             <a href="#" class="hover:underline">成績分析</a>
             @guest
@@ -55,7 +55,7 @@
         <!-- メニュー項目 -->
         <div class="px-4 pb-8 flex flex-col space-y-2">
             <a href="/" class="block hover:bg-blue-700 px-3 py-2 rounded" wire:navigate>ホーム</a>
-            <a href="#" class="block hover:bg-blue-700 px-3 py-2 rounded">スケジュール</a>
+            <a href="/schedule" class="block hover:bg-blue-700 px-3 py-2 rounded" wire:navigate>スケジュール</a>
             <a href="/workbook" class="block hover:bg-blue-700 px-3 py-2 rounded" wire:navigate>過去問</a>
             <a href="#" class="block hover:bg-blue-700 px-3 py-2 rounded">成績分析</a>
             @guest

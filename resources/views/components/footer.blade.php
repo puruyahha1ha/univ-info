@@ -16,9 +16,9 @@
             <flux:icon.book-open />
             <span class="text-xs">過去問</span>
         </a>
-        <a href="#" class="flex flex-col items-center">
+        <a href="/schedule" class="flex flex-col items-center" wire:navigate>
             <flux:icon.calendar />
-            <span class="text-xs">カレンダー</span>
+            <span class="text-xs">スケジュール</span>
         </a>
         <a href="#" class="flex flex-col items-center">
             <flux:icon.user-circle />

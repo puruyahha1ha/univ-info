@@ -2,9 +2,9 @@
     <!-- ヒーローセクション -->
     <section class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-16 px-4">
         <div class="max-w-7xl mx-auto text-center">
-            <h1 class="text-3xl md:text-5xl font-bold mb-4">大学入試対策の総合ポータル</h1>
+            <h1 class="text-3xl md:text-5xl font-bold mb-4">共通テスト「情報Ⅰ」対策</h1>
             <p class="text-lg md:text-xl mb-8">
-                あなたの夢の大学合格へ、最適な学習プランと情報を提供します
+                スケジュール管理から過去問対策まで、あなたの合格を全力でサポートします
             </p>
             <div class="space-x-4">
                 <a href="{{ route('register') }}"
