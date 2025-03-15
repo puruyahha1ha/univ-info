@@ -12,15 +12,15 @@
 
 <body class="min-h-screen font-sans">
     {{-- ヘッダー --}}
-    <x-header />
+    <x-layout.header.header :site-title="config('app.name', 'Laravel')" />
 
     {{-- メインコンテンツ --}}
-    <main class="mt-16 md:mt-0">
+    <main class="my-16 md:mt-0">
         {{ $slot }}
     </main>
 
     <!-- フッター -->
-    <x-footer />
+    <x-layout.footer.footer :siteTitle="config('app.name')" />
 </body>
 
 </html>
