@@ -1,9 +1,8 @@
 <div>
     <livewire:home.hero-section />
 
-    <livewire:home.features-section />
-    <!-- サイトの特徴 -->
-    {{-- <section class="py-16 px-4 bg-white">
+    {{-- サイトの特徴 --}}
+    <section class="py-16 px-4 bg-white">
         <div class="max-w-7xl mx-auto text-center mb-12">
             <span
                 class="inline-block px-3 py-1 rounded-full bg-indigo-100 text-indigo-600 font-medium text-sm mb-3">サポート機能</span>
@@ -12,15 +11,11 @@
             <p class="text-gray-600 mt-3 max-w-2xl mx-auto">効率的に合格を目指すための充実した機能を提供します</p>
         </div>
         <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
-            <!-- 特徴1 -->
             <div
                 class="bg-white rounded-xl shadow-lg p-6 transition-all duration-300 hover:shadow-xl transform hover:-translate-y-2">
                 <div class="mb-6 flex justify-center">
                     <div class="w-16 h-16 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600">
-                        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
-                            <path
-                                d="M12 2C7.03 2 3 6.03 3 11c0 4.97 4.03 9 9 9s9-4.03 9-9c0-4.97-4.03-9-9-9zm3 13H9v-2h6v2zm2-4H7V9h10v2z" />
-                        </svg>
+                        <flux:icon.numbered-list />
                     </div>
                 </div>
                 <h3 class="text-xl font-bold mb-3 text-gray-800">豊富な入試情報</h3>
@@ -28,14 +23,11 @@
                     最新の入試情報を随時更新。大学の詳細情報や受験科目などを簡単に確認できます。学習計画の立案に役立ちます。
                 </p>
             </div>
-            <!-- 特徴2 -->
             <div
                 class="bg-white rounded-xl shadow-lg p-6 transition-all duration-300 hover:shadow-xl transform hover:-translate-y-2">
                 <div class="mb-6 flex justify-center">
                     <div class="w-16 h-16 rounded-full bg-purple-100 flex items-center justify-center text-purple-600">
-                        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M5 4h14v2H5zm2 4h10v2H7zm-2 4h14v2H5zm2 4h10v2H7z" />
-                        </svg>
+                        <flux:icon.book-open />
                     </div>
                 </div>
                 <h3 class="text-xl font-bold mb-3 text-gray-800">個別学習プラン</h3>
@@ -43,14 +35,11 @@
                     一人ひとりの目標や弱点に合わせた学習プランを自動提案。効率的に勉強を進められます。
                 </p>
             </div>
-            <!-- 特徴3 -->
             <div
                 class="bg-white rounded-xl shadow-lg p-6 transition-all duration-300 hover:shadow-xl transform hover:-translate-y-2">
                 <div class="mb-6 flex justify-center">
                     <div class="w-16 h-16 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-600">
-                        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M3 6l9 6 9-6v12H3z" />
-                        </svg>
+                        <flux:icon.document-magnifying-glass />
                     </div>
                 </div>
                 <h3 class="text-xl font-bold mb-3 text-gray-800">カスタムテスト機能</h3>
@@ -59,9 +48,9 @@
                 </p>
             </div>
         </div>
-    </section> --}}
+    </section>
 
-    <!-- クイックアクセス -->
+    {{-- クイックアクセス --}}
     <section class="bg-gray-50 py-16 px-4">
         <div class="max-w-7xl mx-auto text-center mb-12">
             <span
@@ -70,54 +59,44 @@
             <p class="text-gray-600 mt-3 max-w-2xl mx-auto">学習に役立つ機能へ簡単にアクセスできます</p>
         </div>
         <div class="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6">
-            <!-- アクセス1 -->
-            <a href="/exam-info"
-                class="block bg-white p-6 rounded-xl shadow hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 group">
+            <a href="/workbook"
+                class="block bg-white p-6 rounded-xl shadow hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 group"
+                wire:navigate>
                 <div
                     class="bg-indigo-100 text-indigo-600 w-14 h-14 rounded-lg flex items-center justify-center mx-auto mb-4 group-hover:bg-indigo-600 group-hover:text-white transition-colors duration-300">
-                    <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M19 3H5c-1.1 0-2 .9-2 2v14l4-4h12c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z" />
-                    </svg>
+                    <flux:icon.book-open />
                 </div>
                 <h3
                     class="text-lg font-semibold text-center text-gray-800 group-hover:text-indigo-600 transition-colors duration-300">
-                    入試情報</h3>
+                    過去問</h3>
             </a>
-            <!-- アクセス2 -->
-            <a href="/study-plan"
-                class="block bg-white p-6 rounded-xl shadow hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 group">
+            <a href="/schedule"
+                class="block bg-white p-6 rounded-xl shadow hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 group"
+                wire:navigate>
                 <div
                     class="bg-purple-100 text-purple-600 w-14 h-14 rounded-lg flex items-center justify-center mx-auto mb-4 group-hover:bg-purple-600 group-hover:text-white transition-colors duration-300">
-                    <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M5 4h14v2H5zm2 4h10v2H7zm-2 4h14v2H5zm2 4h10v2H7z" />
-                    </svg>
+                    <flux:icon.calendar />
                 </div>
                 <h3
                     class="text-lg font-semibold text-center text-gray-800 group-hover:text-purple-600 transition-colors duration-300">
-                    学習プラン</h3>
+                    スケジュール</h3>
             </a>
-            <!-- アクセス3 -->
-            <a href="/workbook"
-                class="block bg-white p-6 rounded-xl shadow hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 group">
+            <a href="/analysis"
+                class="block bg-white p-6 rounded-xl shadow hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 group"
+                wire:navigate>
                 <div
                     class="bg-blue-100 text-blue-600 w-14 h-14 rounded-lg flex items-center justify-center mx-auto mb-4 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
-                    <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M19 2H5c-1.1 0-2 .9-2 2v16l7-3 7 3V4c0-1.1-.9-2-2-2z" />
-                    </svg>
+                    <flux:icon.chart-bar />
                 </div>
                 <h3
                     class="text-lg font-semibold text-center text-gray-800 group-hover:text-blue-600 transition-colors duration-300">
-                    過去問</h3>
+                    成績分析</h3>
             </a>
-            <!-- アクセス4 -->
             <a href="#testimonials"
                 class="block bg-white p-6 rounded-xl shadow hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 group">
                 <div
                     class="bg-yellow-100 text-yellow-600 w-14 h-14 rounded-lg flex items-center justify-center mx-auto mb-4 group-hover:bg-yellow-600 group-hover:text-white transition-colors duration-300">
-                    <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
-                        <path
-                            d="M12 12c2.7 0 5.2-1.3 6.8-3.4L12 2 5.2 8.6C6.8 10.7 9.3 12 12 12zm0 2c-3.5 0-10 1.8-10 5.3V22h20v-2.7c0-3.5-6.5-5.3-10-5.3z" />
-                    </svg>
+                    <flux:icon.user />
                 </div>
                 <h3
                     class="text-lg font-semibold text-center text-gray-800 group-hover:text-yellow-600 transition-colors duration-300">
@@ -126,7 +105,7 @@
         </div>
     </section>
 
-    <!-- 合格者の声 (Testimonials) -->
+    {{-- 合格者の声 (Testimonials) --}}
     <section id="testimonials" class="py-16 px-4 bg-white">
         <div class="max-w-7xl mx-auto text-center mb-12">
             <span
@@ -136,13 +115,10 @@
             <p class="text-gray-600 mt-3 max-w-2xl mx-auto">実際に合格を勝ち取った先輩たちの声をご紹介</p>
         </div>
 
-        <!-- モダンなカルーセル -->
         <div class="max-w-6xl mx-auto relative" x-data="{ currentIndex: 0 }">
             <div class="overflow-hidden rounded-xl">
-                <!-- スライド全体を横並びに -->
                 <div class="flex transition-transform duration-500 ease-in-out"
                     :style="'transform: translateX(-' + currentIndex * 100 + '%)'">
-                    <!-- スライド1 -->
                     <div class="min-w-full px-4">
                         <div class="bg-gradient-to-br from-indigo-50 to-white rounded-xl shadow-lg p-8 relative">
                             <div class="absolute top-4 right-4 text-indigo-300">
@@ -165,7 +141,6 @@
                             </div>
                         </div>
                     </div>
-                    <!-- スライド2 -->
                     <div class="min-w-full px-4">
                         <div class="bg-gradient-to-br from-purple-50 to-white rounded-xl shadow-lg p-8 relative">
                             <div class="absolute top-4 right-4 text-purple-300">
@@ -188,7 +163,6 @@
                             </div>
                         </div>
                     </div>
-                    <!-- スライド3 -->
                     <div class="min-w-full px-4">
                         <div class="bg-gradient-to-br from-yellow-50 to-white rounded-xl shadow-lg p-8 relative">
                             <div class="absolute top-4 right-4 text-yellow-300">
@@ -214,7 +188,6 @@
                 </div>
             </div>
 
-            <!-- ナビゲーションボタン -->
             <div class="flex justify-center mt-8 space-x-4">
                 <button
                     class="bg-indigo-600 text-white p-3 rounded-full hover:bg-indigo-700 transition-colors shadow-md focus:outline-none"
@@ -236,9 +209,8 @@
         </div>
     </section>
 
-    <!-- 最終CTA -->
+    {{-- 最終CTA --}}
     <section class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-16 px-4 relative overflow-hidden">
-        <!-- 背景の装飾要素 -->
         <div class="absolute inset-0 overflow-hidden opacity-10">
             <div class="absolute -left-10 top-10 w-40 h-40 bg-yellow-300 rounded-full"></div>
             <div class="absolute right-10 -bottom-10 w-64 h-64 bg-indigo-300 rounded-full"></div>

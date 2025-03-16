@@ -8,16 +8,27 @@
     </div>
 
     <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
-        @foreach($features as $feature)
+        @foreach ($features as $feature)
             <div
                 class="bg-white rounded-xl shadow-lg p-6 transition-all duration-300 hover:shadow-xl transform hover:-translate-y-2">
                 <div class="mb-6 flex justify-center">
-                    <div class="w-16 h-16 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600">
-                        <flux:icon.{{ $feature['icon'] }} class="w-8 h-8" />
+                    <div
+                        class="w-16 h-16 rounded-full bg-{{ $feature['color'] }}-100 flex items-center justify-center text-{{ $feature['color'] }}-600">
+                        @switch($feature['icon'])
+                            @case('user-circle')
+                                <flux:icon.user-circle class="w-8 h-8" />
+                                @break
+                            @case(2)
+                                
+                                @break
+                            @default
+                                
+                        @endswitch
                     </div>
-                <h3 class="text-xl font-bold mb-3 text-gray-800">豊富な入試情報</h3>
+                </div>
+                <h3 class="text-xl font-bold mb-3 text-gray-800">{{ $feature['title'] }}</h3>
                 <p class="text-gray-600">
-                    最新の入試情報を随時更新。大学の詳細情報や受験科目などを簡単に確認できます。学習計画の立案に役立ちます。
+                    {{ $feature['description'] }}
                 </p>
             </div>
         @endforeach

@@ -17,9 +17,9 @@
     <div class="px-6 pb-8 flex flex-col space-y-3">
         <x-layouts.header.nav-item url="/" label="ホーム" icon="home" :mobile="true" :navigate="true" />
 
-        <x-layouts.header.nav-item url="/schedule" label="スケジュール" icon="calendar" :mobile="true" :navigate="true" />
-
         <x-layouts.header.nav-item url="/workbook" label="過去問" icon="book-open" :mobile="true" :navigate="true" />
+        
+        <x-layouts.header.nav-item url="/schedule" label="スケジュール" icon="calendar" :mobile="true" :navigate="true" />
 
         <x-layouts.header.nav-item url="/analysis" label="成績分析" icon="chart-bar" :mobile="true" :navigate="true" />
 
