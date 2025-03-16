@@ -12,7 +12,7 @@
 
 <body class="min-h-screen font-sans">
     {{-- ヘッダー --}}
-    <x-layout.header.header :site-title="config('app.name', 'Laravel')" />
+    <x-layouts.header.header :site-title="config('app.name', 'Laravel')" />
 
     {{-- メインコンテンツ --}}
     <main class="my-16 md:mt-0">
@@ -20,7 +20,7 @@
     </main>
 
     <!-- フッター -->
-    <x-layout.footer.footer :siteTitle="config('app.name')" />
+    <x-layouts.footer.footer :siteTitle="config('app.name')" />
 </body>
 
 </html>

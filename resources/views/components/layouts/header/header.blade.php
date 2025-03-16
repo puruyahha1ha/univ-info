@@ -12,12 +12,12 @@
         </div>
 
         {{-- PC用メニュー --}}
-        <x-layout.header.desktop-nav />
+        <x-layouts.header.desktop-nav />
 
         {{-- ハンバーガーボタン（SP用） --}}
-        <x-layout.header.mobile-hamburger />
+        <x-layouts.header.mobile-hamburger />
     </div>
 
     {{-- モバイル用ドロワーメニュー --}}
-    <x-layout.header.mobile-drawer />
+    <x-layouts.header.mobile-drawer />
 </header>

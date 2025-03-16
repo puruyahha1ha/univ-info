@@ -11,21 +11,21 @@
                 <p class="text-indigo-200 max-w-xs">効率的な学習をサポートし、あなたの夢の実現をお手伝いします。</p>
             </div>
             <div class="grid grid-cols-2 md:grid-cols-3 gap-8">
-                <x-layout.footer.footer-menu title="サービス" :items="[
+                <x-layouts.footer.footer-menu title="サービス" :items="[
                     ['ホーム', '/', true],
                     ['スケジュール', '/schedule', true],
                     ['過去問', '/workbook', true],
                     ['成績分析', '/analysis', true],
                 ]" />
 
-                <x-layout.footer.footer-menu title="サポート" :items="[['よくある質問', '#', false], ['お問い合わせ', '#', false], ['ヘルプセンター', '#', false]]" />
+                <x-layouts.footer.footer-menu title="サポート" :items="[['よくある質問', '#', false], ['お問い合わせ', '#', false], ['ヘルプセンター', '#', false]]" />
 
-                <x-layout.footer.footer-menu title="リソース" :items="[['学習ガイド', '#', false], ['成功事例', '#', false], ['ブログ', '#', false]]" />
+                <x-layouts.footer.footer-menu title="リソース" :items="[['学習ガイド', '#', false], ['成功事例', '#', false], ['ブログ', '#', false]]" />
             </div>
         </div>
         <div class="pt-8 border-t border-indigo-800 text-center md:flex md:justify-between md:text-left items-center">
             <p class="text-sm text-indigo-300">&copy; {{ date('Y') }} {{ $siteTitle }}. All rights reserved.</p>
-            <x-layout.footer.social-icons />
+            <x-layouts.footer.social-icons />
         </div>
     </div>
 </footer>

@@ -12,7 +12,7 @@
             <flux:icon.calendar class="w-6 h-6 mb-1" />
             <span class="text-xs">スケジュール</span>
         </a>
-        <a href="/analysis" class="flex flex-col items-center justify-center py-3">
+        <a href="/analysis" class="flex flex-col items-center justify-center py-3" wire:navigate>
             <flux:icon.chart-bar class="w-6 h-6 mb-1" />
             <span class="text-xs">成績分析</span>
         </a>
