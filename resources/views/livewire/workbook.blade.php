@@ -1,4 +1,4 @@
-<div class="bg-gray-50 min-h-screen pt-6 pb-16" x-data="{ selectedCategory: 'all', openExamModal: false }">
+<div class="bg-gray-50 min-h-screen pt-6 pb-16" x-data="{ openExamModal: false }">
     <div class="max-w-6xl mx-auto px-4">
         <!-- ヘッダーセクション -->
         <div class="bg-white rounded-xl shadow-md p-6 mb-6">
@@ -31,54 +31,6 @@
             </div>
         </div>
 
-        <!-- フィルターセクション -->
-        <div class="bg-white rounded-xl shadow-md p-4 mb-6">
-            <div class="flex flex-wrap gap-2">
-                <button @click="selectedCategory = 'all'"
-                    :class="selectedCategory === 'all' ? 'bg-indigo-100 text-indigo-700 border-indigo-300' :
-                        'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'"
-                    class="px-4 py-2 rounded-lg border transition-colors">
-                    すべて
-                </button>
-                <button @click="selectedCategory = 'algorithm'"
-                    :class="selectedCategory === 'algorithm' ? 'bg-indigo-100 text-indigo-700 border-indigo-300' :
-                        'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'"
-                    class="px-4 py-2 rounded-lg border transition-colors">
-                    アルゴリズム
-                </button>
-                <button @click="selectedCategory = 'database'"
-                    :class="selectedCategory === 'database' ? 'bg-indigo-100 text-indigo-700 border-indigo-300' :
-                        'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'"
-                    class="px-4 py-2 rounded-lg border transition-colors">
-                    データベース
-                </button>
-                <button @click="selectedCategory = 'network'"
-                    :class="selectedCategory === 'network' ? 'bg-indigo-100 text-indigo-700 border-indigo-300' :
-                        'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'"
-                    class="px-4 py-2 rounded-lg border transition-colors">
-                    ネットワーク
-                </button>
-                <button @click="selectedCategory = 'security'"
-                    :class="selectedCategory === 'security' ? 'bg-indigo-100 text-indigo-700 border-indigo-300' :
-                        'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'"
-                    class="px-4 py-2 rounded-lg border transition-colors">
-                    情報セキュリティ
-                </button>
-            </div>
-
-            <div class="mt-4 flex items-center">
-                <div class="w-full max-w-xs">
-                    <div class="relative">
-                        <input type="text" placeholder="キーワードで検索..."
-                            class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
-                        <div class="absolute left-3 top-2.5 text-gray-400">
-                            <flux:icon.magnifying-glass class="w-5 h-5" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <!-- 過去問リスト -->
         <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
             <!-- 問題カード1 -->
@@ -87,7 +39,7 @@
                     <div class="flex justify-between items-start mb-3">
                         <span
                             class="inline-block px-2 py-1 text-xs font-semibold bg-indigo-100 text-indigo-800 rounded-full">アルゴリズム</span>
-                        <span class="text-gray-500 text-sm">令和5年度</span>
+                        <span class="text-gray-500 text-sm">令和6年度</span>
                     </div>
                     <h3 class="text-lg font-bold mb-2 text-gray-800">ソートアルゴリズムと計算量</h3>
                     <p class="text-gray-600 mb-4 line-clamp-2">
@@ -122,7 +74,7 @@
                     <div class="flex justify-between items-start mb-3">
                         <span
                             class="inline-block px-2 py-1 text-xs font-semibold bg-purple-100 text-purple-800 rounded-full">データベース</span>
-                        <span class="text-gray-500 text-sm">令和4年度</span>
+                        <span class="text-gray-500 text-sm">令和5年度</span>
                     </div>
                     <h3 class="text-lg font-bold mb-2 text-gray-800">リレーショナルデータベースの設計</h3>
                     <p class="text-gray-600 mb-4 line-clamp-2">
@@ -157,7 +109,7 @@
                     <div class="flex justify-between items-start mb-3">
                         <span
                             class="inline-block px-2 py-1 text-xs font-semibold bg-blue-100 text-blue-800 rounded-full">ネットワーク</span>
-                        <span class="text-gray-500 text-sm">令和3年度</span>
+                        <span class="text-gray-500 text-sm">令和4年度</span>
                     </div>
                     <h3 class="text-lg font-bold mb-2 text-gray-800">TCP/IPの基本と通信プロトコル</h3>
                     <p class="text-gray-600 mb-4 line-clamp-2">
@@ -192,7 +144,7 @@
                     <div class="flex justify-between items-start mb-3">
                         <span
                             class="inline-block px-2 py-1 text-xs font-semibold bg-red-100 text-red-800 rounded-full">情報セキュリティ</span>
-                        <span class="text-gray-500 text-sm">サンプル問題</span>
+                        <span class="text-gray-500 text-sm">令和3年度</span>
                     </div>
                     <h3 class="text-lg font-bold mb-2 text-gray-800">情報セキュリティの脅威と対策</h3>
                     <p class="text-gray-600 mb-4 line-clamp-2">
@@ -227,7 +179,7 @@
                     <div class="flex justify-between items-start mb-3">
                         <span
                             class="inline-block px-2 py-1 text-xs font-semibold bg-indigo-100 text-indigo-800 rounded-full">アルゴリズム</span>
-                        <span class="text-gray-500 text-sm">模擬問題</span>
+                        <span class="text-gray-500 text-sm">令和2年度</span>
                     </div>
                     <h3 class="text-lg font-bold mb-2 text-gray-800">再帰アルゴリズムと動的計画法</h3>
                     <p class="text-gray-600 mb-4 line-clamp-2">
@@ -262,7 +214,7 @@
                     <div class="flex justify-between items-start mb-3">
                         <span
                             class="inline-block px-2 py-1 text-xs font-semibold bg-green-100 text-green-800 rounded-full">プログラミング</span>
-                        <span class="text-gray-500 text-sm">令和5年度</span>
+                        <span class="text-gray-500 text-sm">令和元年度</span>
                     </div>
                     <h3 class="text-lg font-bold mb-2 text-gray-800">オブジェクト指向プログラミング</h3>
                     <p class="text-gray-600 mb-4 line-clamp-2">
@@ -351,8 +303,8 @@
                             <flux:icon.fire class="w-5 h-5" />
                         </div>
                         <div>
-                            <div class="font-medium">今日のおすすめ問題</div>
-                            <div class="text-sm text-gray-500">AIがあなたに最適な問題を提案</div>
+                            <div class="font-medium">令和6年度の問題</div>
+                            <div class="text-sm text-gray-500">最新の情報Ⅰ試験問題</div>
                         </div>
                     </button>
 
@@ -363,8 +315,8 @@
                             <flux:icon.clock class="w-5 h-5" />
                         </div>
                         <div>
-                            <div class="font-medium">時間制限模試</div>
-                            <div class="text-sm text-gray-500">本番と同じ時間で解くテスト形式</div>
+                            <div class="font-medium">令和5年度の問題</div>
+                            <div class="text-sm text-gray-500">前年度の試験問題</div>
                         </div>
                     </button>
 
@@ -375,8 +327,8 @@
                             <flux:icon.star class="w-5 h-5" />
                         </div>
                         <div>
-                            <div class="font-medium">苦手克服トレーニング</div>
-                            <div class="text-sm text-gray-500">あなたの弱点に特化した問題集</div>
+                            <div class="font-medium">令和4年度の問題</div>
+                            <div class="text-sm text-gray-500">2年前の試験問題</div>
                         </div>
                     </button>
 
@@ -387,8 +339,8 @@
                             <flux:icon.arrows-pointing-out class="w-5 h-5" />
                         </div>
                         <div>
-                            <div class="font-medium">カスタム問題作成</div>
-                            <div class="text-sm text-gray-500">好きな条件で問題を組み合わせ</div>
+                            <div class="font-medium">別の年度を選択</div>
+                            <div class="text-sm text-gray-500">過去の試験問題から選ぶ</div>
                         </div>
                     </button>
                 </div>
