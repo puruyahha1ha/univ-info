@@ -2,89 +2,178 @@
 
 namespace App\Livewire\Workbook;
 
+use App\Models\ExamSession;
+use App\Models\Question;
+use App\Models\UserAnswer;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class ResultDisplay extends Component
 {
     public $year;
     public $score;
-    public $answers;
+    public $exam_id;
     public $totalPoints = 0;
     public $totalQuestions = 0;
     public $correctCount = 0;
     public $correctPercentage = 0;
-    public $timeSpent = '10分45秒'; // 実際には計測したものを使用
-    public $averageTimePerQuestion = '32';
-    public $weakestCategory = 'データベース';
-    public $weakestCategoryPercentage = 33.3;
+    public $timeSpent = '';
+    public $averageTimePerQuestion = '';
+    public $weakestCategory = '';
+    public $weakestCategoryPercentage = 100;
     public $categoryResults = [];
     public $questionResults = [];
+    public $examSession = null;
 
-    public function mount($year = null, $score = 0, $answers = null)
+    public function mount($year = null, $score = 0, $exam_id = null)
     {
-        // パラメータにデフォルト値を設定し、nullや欠落時の対応を追加
         $this->year = $year ?? date('Y');
         $this->score = $score;
+        $this->exam_id = $exam_id;
 
-        // $answersが文字列として渡されることを想定
-        if (is_string($answers) && !empty($answers)) {
-            $this->answers = json_decode($answers, true) ?? [];
-        } else {
-            $this->answers = is_array($answers) ? $answers : [];
-        }
+        // 試験セッションを取得
+        $this->loadExamSession();
 
-        // 実際の問題データを取得
-        $questions = $this->getQuestionData();
-        $this->totalQuestions = count($questions);
-
-        // 集計処理
-        $this->processResults($questions);
+        // 結果データを処理
+        $this->processResults();
     }
 
-    private function processResults($questions)
+    /**
+     * 試験セッションデータをロード
+     */
+    private function loadExamSession()
     {
-        $categoryStats = [];
-        $this->weakestCategoryPercentage = 100; // 初期値として100%を設定し、より低い値で更新
+        if ($this->exam_id) {
+            // データベースから特定の試験セッションを取得
+            $this->examSession = ExamSession::with('questions', 'userAnswers')->find($this->exam_id);
 
-        foreach ($questions as $index => $question) {
-            $this->totalPoints += $question['points'];
+            if ($this->examSession) {
+                $this->year = $this->examSession->year;
+                $this->score = $this->examSession->total_points;
+                $this->totalPoints = $this->examSession->max_points;
+                $this->totalQuestions = $this->examSession->total_questions;
+                $this->correctCount = $this->examSession->correct_answers;
+                $this->timeSpent = $this->examSession->formatted_time_spent;
 
-            $answer = $this->answers[$index] ?? null;
-            $isCorrect = $answer && isset($answer['correct']) && $answer['correct'] ? true : false;
-
-            if ($isCorrect) {
-                $this->correctCount++;
+                // 平均回答時間を計算
+                if ($this->totalQuestions > 0 && $this->examSession->time_spent > 0) {
+                    $avgSeconds = round($this->examSession->time_spent / $this->totalQuestions);
+                    $this->averageTimePerQuestion = $avgSeconds . '秒';
+                } else {
+                    $this->averageTimePerQuestion = 'N/A';
+                }
             }
+        }
 
-            // カテゴリ集計
-            $category = $question['category'];
-            if (!isset($categoryStats[$category])) {
-                $categoryStats[$category] = [
-                    'total' => 0,
-                    'correct' => 0,
-                    'points' => 0
+        // 試験セッションが見つからない場合、仮のデータを設定
+        if (!$this->examSession) {
+            $this->timeSpent = '10分45秒';
+            $this->averageTimePerQuestion = '32秒';
+        }
+    }
+
+    /**
+     * 結果データを処理
+     */
+    private function processResults()
+    {
+        // カテゴリごとの統計を初期化
+        $categoryStats = [];
+
+        if ($this->examSession) {
+            // 試験セッションが存在する場合、そのデータを使用
+
+            // 問題と回答のデータを取得
+            $questions = $this->examSession->questions;
+            $userAnswers = $this->examSession->userAnswers;
+
+            // カテゴリごとの統計を計算
+            foreach ($questions as $question) {
+                $category = $question->category;
+
+                if (!isset($categoryStats[$category])) {
+                    $categoryStats[$category] = [
+                        'total' => 0,
+                        'correct' => 0,
+                        'points' => 0
+                    ];
+                }
+
+                $categoryStats[$category]['total']++;
+
+                // この問題に対するユーザーの回答を検索
+                $answer = $userAnswers->where('question_id', $question->id)->first();
+
+                if ($answer && $answer->is_correct) {
+                    $categoryStats[$category]['correct']++;
+                    $categoryStats[$category]['points'] += $answer->points_earned;
+                }
+
+                // 問題別結果を構築
+                $this->questionResults[] = [
+                    'question' => strip_tags($question->question_text),
+                    'category' => $question->category,
+                    'points' => $question->points,
+                    'correct' => $answer ? $answer->is_correct : false,
+                    'selected' => $answer ? $answer->selected_answer : '',
+                    'selectedText' => $answer ? ($question->choices[$answer->selected_answer] ?? '') : '',
+                    'correctAnswer' => $question->correct_answer,
+                    'correctText' => $question->choices[$question->correct_answer] ?? '',
+                    'explanation' => strip_tags($question->explanation),
+                    'answerTime' => $answer ? $answer->answer_time : 0
                 ];
             }
+        } else {
+            // 試験セッションが存在しない場合、仮のデータを使用
+            $questions = Question::where('year', $this->year)->get();
 
-            $categoryStats[$category]['total']++;
-            if ($isCorrect) {
-                $categoryStats[$category]['correct']++;
+            if ($questions->isEmpty()) {
+                // 問題が見つからない場合はダミーデータを使用
+                $questions = $this->getDummyQuestions();
+                $this->processResultsFromDummyData($questions);
+                return;
             }
-            $categoryStats[$category]['points'] += $question['points'];
 
-            // 問題別結果
-            $selectedChoice = $answer ? ($answer['selected'] ?? '') : '';
-            $this->questionResults[] = [
-                'question' => strip_tags($question['question_text']),
-                'category' => $question['category'],
-                'points' => $question['points'],
-                'correct' => $isCorrect,
-                'selected' => $selectedChoice,
-                'selectedText' => $question['choices'][$selectedChoice] ?? '',
-                'correctAnswer' => $question['correct_answer'],
-                'correctText' => $question['choices'][$question['correct_answer']] ?? '',
-                'explanation' => strip_tags($question['explanation'])
-            ];
+            // 問題別の結果を仮定
+            $this->totalQuestions = $questions->count();
+
+            foreach ($questions as $index => $question) {
+                $category = $question->category;
+                $isCorrect = rand(0, 1) === 1; // ランダムな正誤
+
+                if (!isset($categoryStats[$category])) {
+                    $categoryStats[$category] = [
+                        'total' => 0,
+                        'correct' => 0,
+                        'points' => 0
+                    ];
+                }
+
+                $categoryStats[$category]['total']++;
+
+                if ($isCorrect) {
+                    $this->correctCount++;
+                    $categoryStats[$category]['correct']++;
+                    $categoryStats[$category]['points'] += $question->points;
+                }
+
+                $this->totalPoints += $question->points;
+
+                // 問題別結果を構築
+                $randomAnswer = array_rand($question->choices);
+                $this->questionResults[] = [
+                    'question' => strip_tags($question->question_text),
+                    'category' => $question->category,
+                    'points' => $question->points,
+                    'correct' => $isCorrect,
+                    'selected' => $isCorrect ? $question->correct_answer : $randomAnswer,
+                    'selectedText' => $isCorrect ? ($question->choices[$question->correct_answer] ?? '') : ($question->choices[$randomAnswer] ?? ''),
+                    'correctAnswer' => $question->correct_answer,
+                    'correctText' => $question->choices[$question->correct_answer] ?? '',
+                    'explanation' => strip_tags($question->explanation),
+                    'answerTime' => rand(10, 60)
+                ];
+            }
         }
 
         // カテゴリ別統計処理
@@ -108,10 +197,78 @@ class ResultDisplay extends Component
         $this->correctPercentage = ($this->totalQuestions > 0) ? ($this->correctCount / $this->totalQuestions) * 100 : 0;
     }
 
-    private function getQuestionData()
+    /**
+     * ダミーデータから結果を処理（試験セッションが存在しない場合）
+     */
+    private function processResultsFromDummyData($questions)
     {
-        // 実際にはデータベースやファイルから取得する処理
-        // ここではダミーデータを返す
+        $categoryStats = [];
+        $this->totalQuestions = count($questions);
+
+        foreach ($questions as $index => $question) {
+            $category = $question['category'];
+            $isCorrect = rand(0, 1) === 1; // ランダムな正誤
+
+            if (!isset($categoryStats[$category])) {
+                $categoryStats[$category] = [
+                    'total' => 0,
+                    'correct' => 0,
+                    'points' => 0
+                ];
+            }
+
+            $categoryStats[$category]['total']++;
+
+            if ($isCorrect) {
+                $this->correctCount++;
+                $categoryStats[$category]['correct']++;
+                $categoryStats[$category]['points'] += $question['points'];
+            }
+
+            $this->totalPoints += $question['points'];
+
+            // 問題別結果を構築
+            $randomAnswer = array_rand($question['choices']);
+            $this->questionResults[] = [
+                'question' => strip_tags($question['question_text']),
+                'category' => $question['category'],
+                'points' => $question['points'],
+                'correct' => $isCorrect,
+                'selected' => $isCorrect ? $question['correct_answer'] : $randomAnswer,
+                'selectedText' => $isCorrect ? ($question['choices'][$question['correct_answer']] ?? '') : ($question['choices'][$randomAnswer] ?? ''),
+                'correctAnswer' => $question['correct_answer'],
+                'correctText' => $question['choices'][$question['correct_answer']] ?? '',
+                'explanation' => strip_tags($question['explanation']),
+                'answerTime' => rand(10, 60)
+            ];
+        }
+
+        // カテゴリ別統計処理
+        foreach ($categoryStats as $category => $stats) {
+            $percentage = ($stats['total'] > 0) ? ($stats['correct'] / $stats['total']) * 100 : 0;
+            $this->categoryResults[$category] = [
+                'total' => $stats['total'],
+                'correct' => $stats['correct'],
+                'percentage' => $percentage,
+                'points' => $stats['points']
+            ];
+
+            // 苦手カテゴリの判定
+            if ($percentage < $this->weakestCategoryPercentage && $stats['total'] > 0) {
+                $this->weakestCategory = $category;
+                $this->weakestCategoryPercentage = $percentage;
+            }
+        }
+
+        // 全体の正答率
+        $this->correctPercentage = ($this->totalQuestions > 0) ? ($this->correctCount / $this->totalQuestions) * 100 : 0;
+    }
+
+    /**
+     * ダミーの問題データを返す
+     */
+    private function getDummyQuestions()
+    {
         return [
             [
                 'id' => 1,

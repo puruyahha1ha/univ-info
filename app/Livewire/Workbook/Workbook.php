@@ -7,9 +7,6 @@ use Livewire\WithPagination;
 
 class Workbook extends Component
 {
-    // use App\Models\Workbook;
-    // use App\Models\WorkbookCategory;
-    // use App\Models\UserWorkbookProgress;
 
     use WithPagination;
 
@@ -61,11 +58,11 @@ class Workbook extends Component
         $years = collect();
         // ユーザーの進捗状況を取得
         $userProgress = [];
-        if (auth()->check()) {
-            $userProgress = UserWorkbookProgress::where('user_id', auth()->id())
-                ->get()
-                ->keyBy('workbook_id');
-        }
+        // if (auth()->check()) {
+        //     $userProgress = UserWorkbookProgress::where('user_id', auth()->id())
+        //         ->get()
+        //         ->keyBy('workbook_id');
+        // }
 
         // 統計データを取得
         $stats = $this->getUserStats();
