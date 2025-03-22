@@ -8,6 +8,8 @@
     <title>{{ $title ?? 'Page Title' }}</title>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    @stack('styles')
 </head>
 
 <body class="min-h-screen font-sans">
@@ -21,6 +23,8 @@
 
     <!-- フッター -->
     <x-layouts.footer.footer :siteTitle="config('app.name')" />
+
+    @stack('scripts')
 </body>
 
 </html>

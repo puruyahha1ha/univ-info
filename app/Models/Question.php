@@ -4,98 +4,73 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Question extends Model
 {
-    /** @use HasFactory<\Database\Factories\QuestionFactory> */
     use HasFactory;
 
     /**
-     * モデルで利用可能な属性
+     * The attributes that are mass assignable.
      *
-     * @var array
+     * @var array<int, string>
      */
     protected $fillable = [
-        'year',                  // 問題の年度
-        'number',                // 問題番号
-        'category',              // カテゴリ（アルゴリズム、データベースなど）
-        'difficulty',            // 難易度（1-5）
-        'points',                // 配点
-        'question_text',         // 問題文（HTML形式可）
-        'image_path',            // 画像パス（あれば）
-        'choices',               // 選択肢（JSON形式で保存）
-        'correct_answer',        // 正解（選択肢のキー、例：'ア'）
-        'explanation',           // 解説（HTML形式可）
-        'tags',                  // タグ（JSONで保存、検索用）
-        'is_active',             // アクティブ状態（表示/非表示）
+        'title',
+        'content',
+        'correct_answer',
+        'explanation',
+        'category_id',
+        'difficulty',
+        'correct_rate',
+        'exam_year',
+        'question_type',
+        'is_public',
+        'answer_type',
     ];
 
     /**
-     * JSONにキャストする属性
+     * The attributes that should be cast.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
-        'choices' => 'array',
-        'tags' => 'array',
-        'is_active' => 'boolean',
+        'difficulty' => 'integer',
+        'correct_rate' => 'float',
+        'exam_year' => 'integer',
+        'is_public' => 'boolean',
     ];
 
     /**
-     * ユーザーの回答との関連
+     * Get the category that owns the question.
      */
-    public function userAnswers()
+    public function category(): BelongsTo
     {
-        return $this->hasMany(UserAnswer::class);
+        return $this->belongsTo(QuestionCategory::class, 'category_id');
     }
 
     /**
-     * 試験セッションとの関連（多対多）
+     * Get the options for the question.
      */
-    public function examSessions()
+    public function options(): HasMany
     {
-        return $this->belongsToMany(ExamSession::class, 'exam_session_questions')
-            ->withPivot('order')
-            ->withTimestamps();
+        return $this->hasMany(QuestionOption::class);
     }
 
     /**
-     * カテゴリでフィルタリングするスコープ
+     * Get the study records for the question.
      */
-    public function scopeCategory($query, $category)
+    public function studyRecords(): HasMany
     {
-        return $query->where('category', $category);
+        return $this->hasMany(StudyRecord::class);
     }
 
     /**
-     * 年度でフィルタリングするスコープ
+     * Get the feedback for the question.
      */
-    public function scopeYear($query, $year)
+    public function feedback(): HasMany
     {
-        return $query->where('year', $year);
-    }
-    
-    /**
-     * 難易度でフィルタリングするスコープ
-     */
-    public function scopeDifficulty($query, $difficulty)
-    {
-        return $query->where('difficulty', $difficulty);
-    }
-    
-    /**
-     * タグでフィルタリングするスコープ
-     */
-    public function scopeHasTag($query, $tag)
-    {
-        return $query->whereJsonContains('tags', $tag);
-    }
-    
-    /**
-     * アクティブな問題のみを取得するスコープ
-     */
-    public function scopeActive($query)
-    {
-        return $query->where('is_active', true);
+        return $this->hasMany(Feedback::class);
     }
 }
