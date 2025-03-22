@@ -28,7 +28,7 @@
                 </div>
 
                 <!-- カレンダーコントロール -->
-                <div class="flex flex-col md:flex-row justify-between items-center mb-6">
+                <div class="flex flex-col md:flex-row justify-between items-center mb-6" style="text-wrap-mode: nowrap;">
                     <div class="flex items-center space-x-4 mb-4 md:mb-0">
                         <button 
                             class="p-2 rounded-full hover:bg-gray-100"
@@ -187,7 +187,7 @@
                     <!-- 時間スロット -->
                     <div class="grid grid-cols-8 border-t">
                         @for ($hour = 6; $hour < 22; $hour++)
-                            <div class="h-12 border-b text-xs text-gray-500 flex items-center justify-center">
+                            <div class="h-12 border-b text-xs text-gray-500 flex items-center justify-center border-r">
                                 {{ $hour }}:00
                             </div>
                             
